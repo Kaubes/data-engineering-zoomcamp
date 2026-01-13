@@ -8,13 +8,13 @@ terraform {
 }
 
 provider "google" {
-  project = "dtc-de-course-484119"
-  region = "europe-west1"
+  project = var.project
+  region  = "europe-west1"
 }
 
 resource "google_storage_bucket" "training_bucket" {
-  name          = "dtc-de-course-484119-training-bucket"
-  location      = "EU"
+  name          = var.gcs_bucket_name
+  location      = var.location
   force_destroy = true
 
   lifecycle_rule {
@@ -25,4 +25,9 @@ resource "google_storage_bucket" "training_bucket" {
       type = "AbortIncompleteMultipartUpload"
     }
   }
+}
+
+resource "google_bigquery_dataset" "demo_dataset" {
+  dataset_id = var.bq_dataset_name
+  location   = var.location
 }
