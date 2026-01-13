@@ -19,22 +19,19 @@ Repository for the 2026 data engineering zoomcamp
 #### Question 3:
 --> python code that load the data provided in pipeline/homework_q3/py
 --> SQL Query:
+```sql
+        select count(*)
+        from public.green_taxi_data
         where lpep_pickup_datetime between '2025-11-01' and '2025-12-01'
         and trip_distance <= 1
+```
 --> answer = 8007
 
-
-Question 3:
+#### Question 4:
 --> python code that load the data provided in pipeline/homework_q3/py
 --> SQL Query:
 ```sql
-select count(*)
-from public.green_taxi_data
-where lpep_pickup_datetime between '2025-11-01' and '2025-12-01'
-and trip_distance <= 1
-```
---> answer = 8007
---> python code that load the data provided in pipeline/homework_q3/py
+        select cast(lpep_pickup_datetime AS date)
         from public.green_taxi_data
         where trip_distance = 
             (
@@ -42,69 +39,37 @@ and trip_distance <= 1
             from public.green_taxi_data 
             where trip_distance < 100
             )
---> answer = 2025-11-14
-
-Question 4:
---> python code that load the data provided in pipeline/homework_q3/py
---> SQL Query:
-```sql
-select cast(lpep_pickup_datetime AS date)
-from public.green_taxi_data
-where trip_distance = (
-    select MAX(trip_distance)
-    from public.green_taxi_data
-    where trip_distance < 100
-)
 ```
 --> answer = 2025-11-14
 
+
+
+#### Question 5:
 --> python code that load the data provided in pipeline/homework_q3/py
 --> SQL Query:
+```sql
         select z."Zone", sum(total_amount) as summed_amount
         from public.green_taxi_data f
         left join public.zones z on f."PULocationID" = z."LocationID"
         where cast(lpep_pickup_datetime as date) = '2025-11-18'
         group by z."Zone"
-
-Question 5:
---> python code that load the data provided in pipeline/homework_q3/py
---> SQL Query:
-```sql
-select z."Zone", sum(total_amount) as summed_amount
-from public.green_taxi_data f
-left join public.zones z on f."PULocationID" = z."LocationID"
-where cast(lpep_pickup_datetime as date) = '2025-11-18'
-group by z."Zone"
-order by 2 desc
+        order by 2 desc
 ```
 --> answer = East Harlem North
 
 #### Question 6:
 --> python code that load the data provided in pipeline/homework_q3/py
 --> SQL Query:
+```sql
         select do_z."Zone", max(tip_amount) as max_tip
         from public.green_taxi_data f
         left join public.zones pu_z on f."PULocationID" = pu_z."LocationID"
         left join public.zones do_z on f."DOLocationID" = do_z."LocationID"
         where pu_z."Zone" = 'East Harlem North'
             AND CAST(f."lpep_pickup_datetime" AS date) between '2025-11-01' and '2025-12-01'
-
-Question 6:
---> python code that load the data provided in pipeline/homework_q3/py
---> SQL Query:
-```sql
-select do_z."Zone", max(tip_amount) as max_tip
-from public.green_taxi_data f
-left join public.zones pu_z on f."PULocationID" = pu_z."LocationID"
-left join public.zones do_z on f."DOLocationID" = do_z."LocationID"
-where pu_z."Zone" = 'East Harlem North'
-AND CAST(f."lpep_pickup_datetime" AS date) between '2025-11-01' and '2025-12-01'
-group by do_z."Zone"
-order by 2 desc
-```
---> answer = Yorkville West
+        group by do_z."Zone"
         order by 2 desc
-
+```
 --> answer = Yorkville West
 
 #### Question 7:
