@@ -6,4 +6,19 @@ sources:
     schema: prod
     tables:
       - name: yellow_tripdata
+        description: "Yellow taxi trip data"
+        columns:
+          - name: vendorid
+            description: |
+              A code indicating the provider associated with the trip record.
+                1: Creative Mobile Technologies, LLC
+                2: VeriFone Inc.
+                4: Unknown/Other
+            data_type: integer
+            meta:
+              pii: false
+              owner: data_engineering_team
+              importance: high
+              formatting: none
       - name: green_tripdata
+        description: "Green taxi trip data"

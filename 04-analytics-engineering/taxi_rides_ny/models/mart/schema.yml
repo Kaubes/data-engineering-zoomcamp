@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: dim_vendor
+    description: "Dimension table for taxi vendors."
+    columns:
+      - name: vendor_id
+        description: "Unique identifier for the taxi vendor."
+      - name: vendor_name
+        description: "Name of the taxi vendor."

@@ -206,3 +206,12 @@ var/
 venv.bak/
 venv/
 wheels/
+*.csv
+*.duckdb
+target/
+dbt_packages/
+logs/
+
+# Data directory
+data/
+seeds/
