@@ -211,7 +211,8 @@ wheels/
 target/
 dbt_packages/
 logs/
-
+gcp_credentials.json
 # Data directory
 data/
 seeds/
+03-data-warehouse/gcp_credentials.json

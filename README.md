@@ -126,3 +126,91 @@ Searching through the available properties, I identified the 'timezone' field wh
 Result:
 Property = 'timezone'
 Value = 'America/New_York'
+
+### Module 3: data warehouse
+
+#### Question 1:
+```sql
+CREATE OR REPLACE EXTERNAL TABLE `datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3`
+OPTIONS (
+  format = 'parquet',
+  uris = ['gs://de_zoomcamp_hw3_2026/yellow_tripdata_2024-*.parquet']
+);
+
+CREATE OR REPLACE TABLE datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3_non_partioned_table AS
+SELECT * FROM datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3;
+
+SELECT COUNT(*) from datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3
+
+```
+Result: 20332093
+
+#### Question 2:
+
+Created the below queries and then select them one by one to see the expected amount of data that will be read
+
+```sql
+SELECT COUNT(DISTINCT PULocationID) from `datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3`
+
+SELECT COUNT(DISTINCT PULocationID) from `datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3_non_partioned_table`
+```
+Result: 0 MB and 155.12MB
+
+#### Question 3:
+
+Created the below queries and then select them one by one to see the expected amount of data that will be read
+
+```sql
+SELECT PULocationID from datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3_non_partioned_table
+SELECT PULocationID, DOLocationID from datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3_non_partioned_table
+```
+Result: Answer 1
+
+#### Question 4:
+```sql
+SELECT COUNT(*) FROM datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3_non_partioned_table WHERE fare_amount = 0
+```
+Result: 8333
+
+#### Question 5:
+```sql
+CREATE OR REPLACE TABLE datawarehouse-485313.de_zoomcamp_hw3.yellow_tripdata_hw3_partioned
+PARTITION BY
+  DATE(tpep_dropoff_datetime) 
+CLUSTER BY VendorID AS
+SELECT * FROM datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3;
+```
+Result: Partition by tpep_dropoff_datetime and Cluster on VendorID
+
+#### Question 6:
+```sql
+SELECT DISTINCT VendorID
+FROM datawarehouse-485313.de_zoomcamp_hw3.external_yellow_tripdata_hw3_non_partioned_table
+WHERE tpep_dropoff_datetime between '2024-03-01' and '2024-03-15'
+
+SELECT DISTINCT VendorID
+FROM datawarehouse-485313.de_zoomcamp_hw3.yellow_tripdata_hw3_partioned
+WHERE tpep_dropoff_datetime between '2024-03-01' and '2024-03-15'
+
+```
+Result: 310.24 MB and 26.84 MB
+
+#### Question 7:
+External table is a link to a bucket in a GCP bucket so the data stays stored there.
+Result: GCP Bucket
+
+#### Question 8:
+No, it's only a best practice if the column has a high cardinality, you filter on it frequently and the table is very large
+Result: No
+
+#### Question 9:
+It stores data by columns and since we select everything it can't estimate how much data will be read
+
+
+
+
+
+
+
+
+
