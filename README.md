@@ -81,8 +81,8 @@ Repository for the 2026 data engineering zoomcamp
 
 #### Question 1: 
 I ran a backfill for the data of 2020 for the yellow & green taxi
---> Searched for the csv file in my bucket and identified the file size
---> answer: 134.5 MB
+--> Searched for the output file details in Kestra flow execution and identified the file size
+--> answer: 128.3 MB
 
 #### Question 2:
 I identified the variable in the kestra script which is: "{{inputs.taxi}}_tripdata_{{trigger.date | date('yyyy-MM')}}.csv"
