@@ -2,8 +2,8 @@
   config(
     materialized='incremental',
     unique_key='trip_id',
-    on_schema_change='fail'
-  )
+    incremental_strategy='merge',
+    on_schema_change='append_new_columns'  )
 }}
 
 -- Fact table containing all taxi trips enriched with zone information
@@ -17,9 +17,13 @@ select
     trips.taxi_type,
     trips.rate_code_id,
 
-    -- Location details
+    -- Location details (enriched with human-readable zone names from dimension)
     trips.pickup_location_id,
+    pz.borough as pickup_borough,
+    pz.zone as pickup_zone,
     trips.dropoff_location_id,
+    dz.borough as dropoff_borough,
+    dz.zone as dropoff_zone,
 
     -- Trip timing
     trips.pickup_datetime,
@@ -45,6 +49,11 @@ select
     trips.payment_type_description
 
 from {{ ref('int_trips_cleaned') }} as trips
+-- LEFT JOIN preserves all trips even if zone information is missing or unknown
+left join {{ ref('dim_zone') }} as pz
+    on trips.pickup_location_id = pz.location_id
+left join {{ ref('dim_zone') }} as dz
+    on trips.dropoff_location_id = dz.location_id
 
 {% if is_incremental() %}
   -- Only process new trips based on pickup datetime

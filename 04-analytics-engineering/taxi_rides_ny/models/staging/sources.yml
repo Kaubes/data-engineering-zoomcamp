@@ -22,3 +22,5 @@ sources:
               formatting: none
       - name: green_tripdata
         description: "Green taxi trip data"
+      - name: fhv_tripdata
+        description: "For-Hire Vehicle (FHV) trip data"
