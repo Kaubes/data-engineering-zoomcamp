@@ -247,11 +247,11 @@ and taxi_type = 'Green'
 Result: 385.893 --> closest option: 384.624
 
 #### Question 6:
-Step 1. I duplicated the ingestion script and altered it to load the FHV data and run the script to load data in to my duckdb
-Step 2. I created a new source in my staging folder for the newly loaded FHV data (see models/staging/sources.yml)
-Step 3. I created a new model (stg_fhv_tripdata) that loads in the source data and does casting and renaming of all required columns and I filter out records without dispatching_base_num
-Step 4. I ran dbt run -s stg_fhv_tripdata to create the view
-Step 5. Running duckdb -ui in command line, I attached the duckdb database and ran the following query:
+Step 1. I duplicated the ingestion script and altered it to load the FHV data and run the script to load data in to my duckdb  
+Step 2. I created a new source in my staging folder for the newly loaded FHV data (see models/staging/sources.yml)  
+Step 3. I created a new model (stg_fhv_tripdata) that loads in the source data and does casting and renaming of all required columns and I filter out records without dispatching_base_num  
+Step 4. I ran dbt run -s stg_fhv_tripdata to create the view  
+Step 5. Running duckdb -ui in command line, I attached the duckdb database and ran the following query:  
 
 ```sql
 from taxi_rides_ny.dev.stg_fhv_tripdata
