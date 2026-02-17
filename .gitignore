@@ -216,3 +216,10 @@ gcp_credentials.json
 data/
 seeds/
 03-data-warehouse/gcp_credentials.json
+
+.bruin.yml
+.bruin.yml
+logs/runs
+logs/*.log
+*.py[cod]
+*.db
