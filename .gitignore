@@ -222,4 +222,4 @@ seeds/
 logs/runs
 logs/*.log
 *.py[cod]
-*.db
+*.dbduckdb.db
